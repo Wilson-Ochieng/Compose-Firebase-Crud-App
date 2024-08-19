@@ -27,7 +27,7 @@ class SharedViewModel() : ViewModel() {
         try {
             fireStoreRef.set(userData)
                 .addOnSuccessListener {
-                    Toast.makeText(context, "Successfully saved data", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Successfully posted data", Toast.LENGTH_SHORT).show()
 
                 }
         } catch (e: Exception) {
@@ -62,7 +62,7 @@ class SharedViewModel() : ViewModel() {
 
 
                     } else{
-                        Toast.makeText(context, "Successfully saved data", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Successfully fetched data", Toast.LENGTH_SHORT).show()
 
 
                     }
@@ -85,7 +85,7 @@ class SharedViewModel() : ViewModel() {
         userID:String,
         navController: NavController,
         context: Context,
-        backtoMainScreen :() -> Unit
+
 
     ) = CoroutineScope(Dispatchers.IO).launch {
 
@@ -96,7 +96,7 @@ class SharedViewModel() : ViewModel() {
         try {
             fireStoreRef.delete()
                 .addOnSuccessListener{
-                        Toast.makeText(context, "Successfully saved data", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Successfully deleted data", Toast.LENGTH_SHORT).show()
                     navController.popBackStack()
 
 

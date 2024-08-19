@@ -1,6 +1,7 @@
 package com.example.hotelloginsystem
 
 import android.os.Bundle
+import android.provider.CalendarContract.Colors
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -34,13 +35,13 @@ class MainActivity : ComponentActivity() {
             HotelLoginSystemTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
 //                    color = MaterialTheme.colors.background
                 ) {
                     navController = rememberNavController()
 
                     //Calling the NavGraph that contains the composables with screens
                     NavGraph(navController = navController, sharedViewModel = sharedViewModel)
-
 
                 }
             }

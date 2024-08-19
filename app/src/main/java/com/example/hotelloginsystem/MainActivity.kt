@@ -20,9 +20,12 @@ import androidx.navigation.compose.rememberNavController
 import com.example.hotelloginsystem.ui.theme.HotelLoginSystemTheme
 import com.example.hotelloginsystem.utils.SharedViewModel
 import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var navController: NavHostController
     private val sharedViewModel: SharedViewModel by viewModels()
@@ -33,15 +36,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             HotelLoginSystemTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-//                    color = MaterialTheme.colors.background
-                ) {
-                    navController = rememberNavController()
 
-                    //Calling the NavGraph that contains the composables with screens
-                    NavGraph(navController = navController, sharedViewModel = sharedViewModel)
+                HotelLoginScreen()
+//                Surface(
+//                    modifier = Modifier.fillMaxSize(),
+//                    color = MaterialTheme.colorScheme.background
+////                    color = MaterialTheme.colors.background
+//                ) {
+//                    navController = rememberNavController()
+//
+//                    //Calling the NavGraph that contains the composables with screens
+//                    NavGraph(navController = navController, sharedViewModel = sharedViewModel)
 
                 }
             }
@@ -49,7 +54,7 @@ class MainActivity : ComponentActivity() {
     }
 
 
-}
+
 
 
 @Preview(showBackground = true)

@@ -1,12 +1,12 @@
 package com.example.hotelloginsystem.nav
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.hotelloginsystem.screen.AddDataScreen
+import com.example.hotelloginsystem.screen.DashboardScreen
+
 import com.example.hotelloginsystem.screen.GetDataScreen
 import com.example.hotelloginsystem.screen.MainScreen
 import com.example.hotelloginsystem.utils.SharedViewModel
@@ -20,6 +20,12 @@ fun NavGraph(
         navController = navController,
         startDestination = Screens.MainScreen.route
     ) {
+//        dashboard
+        composable(
+            route = Screens.DashboardScreen.route
+        ){
+            DashboardScreen(navController = navController)
+        }
         // main screen
         composable(
             route = Screens.MainScreen.route

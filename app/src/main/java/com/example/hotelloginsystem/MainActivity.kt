@@ -48,11 +48,25 @@ class MainActivity : ComponentActivity() {
 
                     //Calling the NavGraph that contains the composables with screens
                     NavGraph(navController = navController, sharedViewModel = sharedViewModel)
+//                HotelLoginScreen()
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+//                    color = MaterialTheme.colors.background
+                ) {
+                    navController = rememberNavController()
+
+                    //Calling the NavGraph that contains the composables with screens
+                    NavGraph(navController = navController, sharedViewModel = sharedViewModel)
 
                 }
             }
         }
     }
+}
+
+
+
 
 
     @Preview(showBackground = true)

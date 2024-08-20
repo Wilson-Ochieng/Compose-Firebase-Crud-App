@@ -59,8 +59,6 @@ class SharedViewModel() : ViewModel() {
                     if(it.exists()){
                       val userData = it.toObject<UserData>()!!
                         data(userData)
-
-
                     } else{
                         Toast.makeText(context, "Successfully fetched data", Toast.LENGTH_SHORT).show()
 

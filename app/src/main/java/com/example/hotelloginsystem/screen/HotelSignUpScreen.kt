@@ -1,5 +1,6 @@
-package com.example.hotelloginsystem
+package com.example.hotelloginsystem.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -11,12 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -33,15 +31,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ChainStyle
-import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
+import com.example.hotelloginsystem.R
+import com.example.hotelloginsystem.nav.Screens
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-private lateinit var auth: FirebaseAuth
+lateinit var auth: FirebaseAuth
 
 @Composable
-fun HotelLoginScreen() {
+fun HotelLoginScreen( navController: NavController,
+) {
     // Initialize Firebase Auth
     auth = FirebaseAuth.getInstance()
 
@@ -121,13 +121,21 @@ fun HotelLoginScreen() {
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
-
                 Button(
-                    onClick = { signUp(email, password, { user -> successMessage = "Welcome ${user?.email}" }, { error -> errorMessage = error }) },
+                    onClick = {
+                        signUp(email, password, { user ->
+                            successMessage = "Welcome ${user?.email}"
+                            // Navigate to DashboardScreen on successful sign up
+                            navController.navigate(Screens.LoginScreen.route)
+                        }, { error ->
+                            errorMessage = error
+                        })
+                    },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("Sign Up")
                 }
+
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -156,7 +164,15 @@ private fun signUp(email: String, password: String, onSuccess: (FirebaseUser?) -
     auth.createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                onSuccess(auth.currentUser)
+                val user = auth.currentUser
+                user?.sendEmailVerification()
+                    ?.addOnCompleteListener { verificationTask ->
+                        if (verificationTask.isSuccessful) {
+                            onSuccess(user)
+                        } else {
+                            onFailure(verificationTask.exception?.message ?: "Verification email failed to send")
+                        }
+                    }
             } else {
                 onFailure(task.exception?.message ?: "Sign up failed")
             }

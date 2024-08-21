@@ -48,11 +48,15 @@ class MainActivity : ComponentActivity() {
 
                     //Calling the NavGraph that contains the composables with screens
                     NavGraph(navController = navController, sharedViewModel = sharedViewModel)
+//                HotelLoginScreen()
 
-                }
             }
         }
     }
+}
+
+
+
 
 
     @Preview(showBackground = true)
